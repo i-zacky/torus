@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  torus-db:
+    container_name: torus-db
+    hostname: torus-db
+    build:
+      context: .
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: ${DB_TZ}
+    ports:
+      - '5432:5432'
+    volumes:
+      - torus-db-data:/var/lib/postgresql/data
+    networks:
+      - torus
+
+volumes:
+  torus-db-data:
+    name: torus-db-data
+    driver: local
+
+networks:
+  torus:
+    name: torus

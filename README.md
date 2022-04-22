@@ -23,4 +23,7 @@
 
   $ cargo --version
   cargo 1.60.0 (d1fd9fe2c 2022-03-01)
+
+  $ diesel --version
+  diesel 1.4.1
   ```

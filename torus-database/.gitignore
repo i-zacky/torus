@@ -1,2 +1,5 @@
 # dotenv
 .env
+
+# build directory
+target/

@@ -1,4 +1,5 @@
 use actix_web::{App, HttpServer};
+use torus_api::handlers::health_check_handlers::get_health_status;
 use torus_api::handlers::sandbox_handler::{
     create_sandbox, delete_sandbox_by_id, get_sandbox, get_sandbox_by_id, update_sandbox,
 };
@@ -7,6 +8,7 @@ use torus_api::handlers::sandbox_handler::{
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
+            .service(get_health_status)
             .service(get_sandbox)
             .service(get_sandbox_by_id)
             .service(create_sandbox)

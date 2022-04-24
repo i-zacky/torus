@@ -1,26 +1,17 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
-
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
-}
+use actix_web::{App, HttpServer};
+use torus_api::handlers::sandbox_handler::{
+    create_sandbox, delete_sandbox_by_id, get_sandbox, get_sandbox_by_id, update_sandbox,
+};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(hello)
-            .service(echo)
-            .route("/hey", web::get().to(manual_hello))
+            .service(get_sandbox)
+            .service(get_sandbox_by_id)
+            .service(create_sandbox)
+            .service(update_sandbox)
+            .service(delete_sandbox_by_id)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

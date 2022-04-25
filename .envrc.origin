@@ -4,4 +4,5 @@ export DB_PORT=
 export DB_USER=
 export DB_PASSWORD=
 export DB_NAME=
+export DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 export DB_TZ=

@@ -1,5 +1,5 @@
 use bigdecimal::BigDecimal;
-use chrono::NaiveDate;
+use chrono::{NaiveDate, NaiveDateTime};
 
 #[derive(Queryable, Debug)]
 pub struct Sandbox {
@@ -9,4 +9,6 @@ pub struct Sandbox {
     pub height: Option<i32>,
     pub weight: Option<BigDecimal>,
     pub enabled: Option<bool>,
+    pub created_at: Option<NaiveDateTime>,
+    pub updated_at: Option<NaiveDateTime>,
 }

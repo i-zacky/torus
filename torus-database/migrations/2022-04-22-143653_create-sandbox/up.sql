@@ -4,5 +4,7 @@ CREATE TABLE sandbox (
     birthday DATE,
     height INTEGER,
     weight NUMERIC(4, 1),
-    enabled BOOLEAN
+    enabled BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )

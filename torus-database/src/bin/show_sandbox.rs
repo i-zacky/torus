@@ -14,7 +14,7 @@ fn main() {
         .load::<Sandbox>(&connection)
         .expect("Error loading posts");
 
-    println!("Displaying {} sandboxes", results.len());
+    println!("Displaying {} sandbox", results.len());
     for r in results {
         println!("{:?}", r);
     }

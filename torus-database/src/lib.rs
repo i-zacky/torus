@@ -8,6 +8,7 @@ use serde::Deserialize;
 use std::process;
 
 pub mod models;
+pub mod sandbox_repository;
 pub mod schema;
 
 #[derive(Deserialize)]

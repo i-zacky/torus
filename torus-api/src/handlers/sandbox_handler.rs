@@ -1,6 +1,8 @@
 use actix_web::{delete, get, post, put, web::Json, web::Path, Responder, Result};
 use bigdecimal::BigDecimal;
 use serde::{Deserialize, Serialize};
+use torus_database::establish_connection;
+use torus_database::sandbox_repository::get_all;
 use ulid::Ulid;
 
 #[derive(Serialize, Deserialize)]
@@ -15,32 +17,34 @@ pub struct Sandbox {
 
 #[get("/sandbox")]
 pub async fn get_sandbox() -> Result<impl Responder> {
-    let response = [
-        Sandbox {
-            id: Ulid::new().to_string(),
-            name: String::from("sandbox1"),
-            birthday: String::from("1990-04-10"),
-            height: 160,
-            weight: BigDecimal::from(50.4),
-            enabled: true,
-        },
-        Sandbox {
-            id: Ulid::new().to_string(),
-            name: String::from("sandbox2"),
-            birthday: String::from("1990-04-11"),
-            height: 170,
-            weight: BigDecimal::from(55.8),
-            enabled: false,
-        },
-        Sandbox {
-            id: Ulid::new().to_string(),
-            name: String::from("sandbox3"),
-            birthday: String::from("1990-04-12"),
-            height: 180,
-            weight: BigDecimal::from(60.1),
-            enabled: true,
-        },
-    ];
+    let conn = establish_connection();
+    let results = get_all(&conn);
+    let response: Vec<Sandbox> = results
+        .into_iter()
+        .map(|v| Sandbox {
+            id: v.id,
+            name: match v.name {
+                None => String::from(""),
+                Some(val) => val,
+            },
+            birthday: match v.birthday {
+                None => String::from(""),
+                Some(val) => val.to_string(),
+            },
+            height: match v.height {
+                None => 0,
+                Some(val) => val,
+            },
+            weight: match v.weight {
+                None => BigDecimal::from(0),
+                Some(val) => val,
+            },
+            enabled: match v.enabled {
+                None => false,
+                Some(val) => val,
+            },
+        })
+        .collect();
 
     Ok(Json(response))
 }
